@@ -1,5 +1,3 @@
--- Campus Equipment Checkout: run once in phpMyAdmin's SQL tab.
--- Existing databases are preserved; existing tables are not overwritten.
 CREATE DATABASE IF NOT EXISTS campus_equipment_checkout
   CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE campus_equipment_checkout;
@@ -50,7 +48,6 @@ CREATE TABLE checkouts (
     due_at DATETIME NOT NULL,
     returned_at DATETIME NULL,
     notes TEXT,
-    -- Only unreturned loans produce a value. Multiple NULLs are allowed.
     active_equipment_id INT UNSIGNED GENERATED ALWAYS AS
         (CASE WHEN returned_at IS NULL THEN equipment_id ELSE NULL END) PERSISTENT,
     CONSTRAINT uq_active_equipment UNIQUE (active_equipment_id),
